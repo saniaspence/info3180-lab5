@@ -31,7 +31,7 @@ def about():
 @login_required
 def secure_page():
     """Render the website's secure page."""
-    return render_template('secure_page')
+    return render_template('secure_page.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -61,6 +61,12 @@ def login():
             return redirect(url_for("home"))  # they should be redirected to a secure-page route instead
     return render_template("login.html", form=form)
 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash('you have logged out!')
+    return redirect(url_for('home'))
 
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
